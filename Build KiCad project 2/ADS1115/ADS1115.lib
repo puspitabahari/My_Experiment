@@ -1,0 +1,52 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#(c) SnapEDA 2016 (snapeda.com)
+#This work is licensed under a Creative Commons Attribution-ShareAlike 4.0 International License (CC BY-SA) with Design Exception 1.0
+#
+# ADS1115
+#
+DEF ADS1115 U 0 40 Y N 1 L N
+F0 "U" -500 775 50 H V L BNN
+F1 "ADS1115" 0 0 50 H I L BNN
+F2 "MSOP10" 0 0 50 H I L BNN
+F3 "" 0 0 50 H I L BNN
+DRAW
+T 0 -500 -826 60 0 0 0 ADS1115 Normal 0 L B
+T 0 -451 350 50 0 0 0 A0+ Normal 0 L C
+T 0 -451 250 50 0 0 0 AIN0 Normal 0 L C
+T 0 -450 150 50 0 0 0 A0- Normal 0 L C
+T 0 -450 50 50 0 0 0 AIN1 Normal 0 L C
+T 0 -450 -50 50 0 0 0 A1+ Normal 0 L C
+T 0 -450 -150 50 0 0 0 AIN2 Normal 0 L C
+T 0 -451 -251 50 0 0 0 A1- Normal 0 L C
+T 0 -451 -351 50 0 0 0 AIN3 Normal 0 L C
+T 0 450 550 50 0 0 0 ALERT/ Normal 0 R C
+T 0 450 450 50 0 0 0 RDY Normal 0 R C
+T 0 451 250 50 0 0 0 ADDR Normal 0 R C
+T 0 451 50 50 0 0 0 SCL Normal 0 R C
+T 0 451 -150 50 0 0 0 SDA Normal 0 R C
+P 2 0 0 10 -500 550 500 550 N
+P 2 0 0 10 500 -450 -500 -450 N
+T 0 0 650 60 0 0 0 16-Bit~I²C~ADC Normal 0 C C
+P 2 0 0 10 500 -750 -500 -750 N
+T 0 -450 -600 70 0 0 0 VDD: Normal 0 L B
+T 0 -50 -601 70 0 0 0 -0.3~5.5V Normal 0 L B
+T 0 -450 -700 70 0 0 0 Temp: Normal 0 L B
+T 0 -100 -700 70 0 0 0 -50~125°C Normal 0 L B
+T 0 -451 451 50 0 0 0 VDD Normal 0 L C
+T 0 451 -350 50 0 0 0 VSS Normal 0 R C
+S -500 -562 500 938 0 0 10 f
+X ~ 4 -600 250 100 R 40 40 0 0 B 
+X ~ 5 -600 50 100 R 40 40 0 0 B 
+X ~ 6 -600 -150 100 R 40 40 0 0 B 
+X ~ 7 -600 -350 100 R 40 40 0 0 B 
+X ~ 2 600 450 100 L 40 40 0 0 B 
+X ~ 1 600 250 100 L 40 40 0 0 B 
+X ~ 10 600 50 100 L 40 40 0 0 B 
+X ~ 9 600 -150 100 L 40 40 0 0 B 
+X ~ 3 600 -350 100 L 40 40 0 0 B 
+X ~ 8 -600 450 100 R 40 40 0 0 B 
+ENDDRAW
+ENDDEF
+#
+# End Library
