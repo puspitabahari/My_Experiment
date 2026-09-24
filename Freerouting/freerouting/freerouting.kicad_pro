@@ -484,7 +484,10 @@
     }
   },
   "libraries": {
-    "pinned_footprint_libs": [],
+    "pinned_footprint_libs": [
+      "RTC_Footprint",
+      "LCDI2C_Footprint"
+    ],
     "pinned_symbol_libs": []
   },
   "meta": {
@@ -661,7 +664,7 @@
         "uuid": "432da57f-bbc7-418d-b2cb-a17e31278dfa"
       }
     ],
-    "used_designators": "R1,BT1,#PWR1,D1,SW1",
+    "used_designators": "J1,R1,BT1,#PWR1,D1,SW1,U1-2",
     "variants": []
   },
   "sheets": [
