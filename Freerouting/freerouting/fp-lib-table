@@ -2,4 +2,5 @@
 	(version 7)
 	(lib (name "RTC_Footprint") (type "KiCad") (uri "${KIPRJMOD}/RTC_Footprint.pretty") (options "") (descr ""))
 	(lib (name "LCDI2C_Footprint") (type "KiCad") (uri "${KIPRJMOD}/LCDI2C_Footprint.pretty") (options "") (descr ""))
+	(lib (name "ESP-12F_Footprint") (type "KiCad") (uri "${KIPRJMOD}/ESP-12F_Footprint.pretty") (options "") (descr ""))
 )

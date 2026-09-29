@@ -486,7 +486,8 @@
   "libraries": {
     "pinned_footprint_libs": [
       "RTC_Footprint",
-      "LCDI2C_Footprint"
+      "LCDI2C_Footprint",
+      "ESP-12F_Footprint"
     ],
     "pinned_symbol_libs": []
   },
