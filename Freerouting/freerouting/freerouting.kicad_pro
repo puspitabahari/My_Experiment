@@ -489,7 +489,9 @@
       "LCDI2C_Footprint",
       "ESP-12F_Footprint"
     ],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "Symbol ESP-12F"
+    ]
   },
   "meta": {
     "filename": "freerouting.kicad_pro",
@@ -665,7 +667,7 @@
         "uuid": "432da57f-bbc7-418d-b2cb-a17e31278dfa"
       }
     ],
-    "used_designators": "J1,R1,BT1,#PWR1,D1,SW1,U1-2",
+    "used_designators": "J1,R1,BT1,#PWR1,D1,SW1,U1-3",
     "variants": []
   },
   "sheets": [
