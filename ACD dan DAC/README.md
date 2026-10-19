@@ -4,10 +4,10 @@ Dokumentasi dan kode program untuk eksperimen pembacaan sinyal analog (**ADC**) 
 
 ---
 
-## 📌 Deskripsi Proyek
+## Deskripsi Proyek
 Eksperimen ini bertujuan untuk mempelajari konsep dasar konversi sinyal analog ke digital dan sebaliknya. Sistem membaca nilai analog dari potensiometer, mengonversinya menjadi besaran tegangan fisik, serta memantau hasilnya secara *real-time* melalui Serial Monitor.
 
-## 🛠️ Spesifikasi Hardware & Pinout
+## Spesifikasi Hardware & Pinout
 
 ### Komponen Utama
 * **Mikrokontroler:** Arduino Uno (ATmega328P)
@@ -24,7 +24,7 @@ Eksperimen ini bertujuan untuk mempelajari konsep dasar konversi sinyal analog k
 
 ---
 
-## 💻 Konfigurasi `platformio.ini`
+## Konfigurasi `platformio.ini`
 *catatan*: kode program tertera di main.cpp
 ```ini
 [env:uno]
