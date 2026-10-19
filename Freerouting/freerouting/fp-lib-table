@@ -3,4 +3,7 @@
 	(lib (name "RTC_Footprint") (type "KiCad") (uri "${KIPRJMOD}/RTC_Footprint.pretty") (options "") (descr ""))
 	(lib (name "LCDI2C_Footprint") (type "KiCad") (uri "${KIPRJMOD}/LCDI2C_Footprint.pretty") (options "") (descr ""))
 	(lib (name "ESP-12F_Footprint") (type "KiCad") (uri "${KIPRJMOD}/ESP-12F_Footprint.pretty") (options "") (descr ""))
+	(lib (name "Level converter") (type "KiCad") (uri "${KIPRJMOD}/Level converter.pretty") (options "") (descr ""))
+	(lib (name "LoRa_Footprint") (type "KiCad") (uri "${KIPRJMOD}/LoRa_Footprint.pretty") (options "") (descr ""))
+	(lib (name "W25QXX_Footprint") (type "KiCad") (uri "${KIPRJMOD}/W25QXX_Footprint.pretty") (options "") (descr ""))
 )

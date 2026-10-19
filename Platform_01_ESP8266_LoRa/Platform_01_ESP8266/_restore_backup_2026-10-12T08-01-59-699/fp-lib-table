@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "level_converter_footprint") (type "KiCad") (uri "${KIPRJMOD}/level_converter_footprint.pretty") (options "") (descr ""))
+)

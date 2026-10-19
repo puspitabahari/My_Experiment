@@ -487,7 +487,10 @@
     "pinned_footprint_libs": [
       "RTC_Footprint",
       "LCDI2C_Footprint",
-      "ESP-12F_Footprint"
+      "ESP-12F_Footprint",
+      "Level converter",
+      "LoRa_Footprint",
+      "W25QXX_Footprint"
     ],
     "pinned_symbol_libs": [
       "Symbol ESP-12F"

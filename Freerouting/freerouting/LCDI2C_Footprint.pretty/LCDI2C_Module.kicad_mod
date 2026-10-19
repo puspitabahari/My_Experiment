@@ -7,7 +7,7 @@
 		(at -2 3.235 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "4a1a15d4-4930-4a81-81dc-ea5bd1ef7c43")
+		(uuid "4d10b0bb-7485-490e-bd3e-94e77b81a9f9")
 		(effects
 			(font
 				(size 1 1)
@@ -19,7 +19,7 @@
 		(at 0 1 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "ab52acdf-a41f-4cff-a36c-9d980752f0ec")
+		(uuid "c0113d2f-9429-452a-9929-ac98cc0d7317")
 		(effects
 			(font
 				(size 1 1)
@@ -32,7 +32,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "03e5239a-aeda-4b63-abf7-8af62e4a6090")
+		(uuid "a4103323-c7dc-4192-8b60-59096b4cf964")
 		(effects
 			(font
 				(size 1 1)
@@ -45,7 +45,7 @@
 		(unlocked yes)
 		(layer "F.Fab")
 		(hide yes)
-		(uuid "1b1c7385-11af-40af-b2da-ab6caa3ce137")
+		(uuid "fe6bbee0-c64a-4712-8c4e-cb0d66001905")
 		(effects
 			(font
 				(size 1 1)
@@ -57,25 +57,25 @@
 	(duplicate_pad_numbers_are_jumpers no)
 	(fp_rect
 		(start -45.58 -15.24)
-		(end 33.02 21.71)
+		(end 33.92 20.66)
 		(stroke
 			(width 0.1)
 			(type default)
 		)
 		(fill no)
 		(layer "F.SilkS")
-		(uuid "976a32c9-929b-45df-a987-de9b4e0dee4d")
+		(uuid "3e67c974-cadb-4957-8d78-80edf3fda617")
 	)
 	(fp_rect
-		(start -38.1 -10.16)
-		(end 25.4 17.78)
+		(start -37.6 -10.65)
+		(end 25.9 17.29)
 		(stroke
 			(width 0.1)
 			(type default)
 		)
 		(fill no)
 		(layer "F.SilkS")
-		(uuid "ec8adc92-e191-46a2-961f-7e879bef8c17")
+		(uuid "edc1adb8-9057-4429-836f-72b73dcd88e0")
 	)
 	(fp_rect
 		(start -48.26 -17.78)
@@ -86,13 +86,13 @@
 		)
 		(fill no)
 		(layer "F.CrtYd")
-		(uuid "10e72d3d-09b6-480a-861a-ffa5be993223")
+		(uuid "b1935151-e4d5-4c6e-8af1-343d3284eaf8")
 	)
 	(fp_text user "GND"
 		(at -40.64 -10.16 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "895d82a8-9b35-4ff3-8c4d-c6517caa3dd0")
+		(uuid "f6628ee1-f2bf-496f-9c46-8aa4c8fd37c4")
 		(effects
 			(font
 				(size 1 1)
@@ -104,7 +104,7 @@
 		(at -40.64 -7.62 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "e403bc12-ccd8-4ac6-b91b-31c3fc92bda5")
+		(uuid "900cc0fe-aa7c-4ced-a122-250768d1c3ba")
 		(effects
 			(font
 				(size 1 1)
@@ -116,7 +116,7 @@
 		(at -40.64 -5.08 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "c38070a8-98c8-492c-8082-0acf6d3cfe74")
+		(uuid "a659f761-862f-4e4c-9070-718c2a96a17a")
 		(effects
 			(font
 				(size 1 1)
@@ -128,7 +128,7 @@
 		(at -40.64 -2.54 0)
 		(unlocked yes)
 		(layer "F.SilkS")
-		(uuid "1bdfd22f-7c91-47a0-be27-db59fe410091")
+		(uuid "850227df-ff13-4200-bb62-73b56f1aeace")
 		(effects
 			(font
 				(size 1 1)
@@ -140,7 +140,7 @@
 		(at 0 2.5 0)
 		(unlocked yes)
 		(layer "F.Fab")
-		(uuid "dc1ef404-e8ff-4a7a-a887-d626a48bc1fc")
+		(uuid "c4ce1509-5fc6-492f-9b75-2519df33b315")
 		(effects
 			(font
 				(size 1 1)
@@ -152,35 +152,35 @@
 		(at 36.4 38)
 		(size 1)
 		(layer "F.SilkS")
-		(uuid "c86346c4-7793-4839-a5b4-90c3847c40d3")
+		(uuid "da3d084c-1a54-4973-8143-ad8f0ac6ac37")
 	)
 	(pad "" np_thru_hole circle
-		(at -43 -13)
+		(at -43.55 -13)
 		(size 3 3)
 		(drill 3)
 		(layers "*.Cu" "*.Mask")
-		(uuid "436abbd7-b5ce-4503-8cc8-5a59bf85ba37")
+		(uuid "e84d52f0-6bee-45d0-a0ff-536635416692")
 	)
 	(pad "" np_thru_hole circle
-		(at -43 19)
+		(at -43.45 18.6)
 		(size 3 3)
 		(drill 3)
 		(layers "*.Cu" "*.Mask")
-		(uuid "e6046108-6cbb-4933-b840-9832b6c8dc4d")
+		(uuid "ae4f9e3a-b7a7-4b09-97b4-e13da213e85b")
 	)
 	(pad "" np_thru_hole circle
-		(at 30 -13)
+		(at 31.7 18.35)
 		(size 3 3)
 		(drill 3)
 		(layers "*.Cu" "*.Mask")
-		(uuid "7985514a-2c48-4a7e-934d-253d381fff3b")
+		(uuid "37803884-cc68-486d-adea-2c436f0bc891")
 	)
 	(pad "" np_thru_hole circle
-		(at 30 19)
+		(at 31.8 -13)
 		(size 3 3)
 		(drill 3)
 		(layers "*.Cu" "*.Mask")
-		(uuid "20be6440-c7a0-49f1-9330-6839125da3c8")
+		(uuid "6ae13a89-aa53-4953-94b9-fb0ec4195a2c")
 	)
 	(pad "1" thru_hole roundrect
 		(at -43.18 -10.16 270)
@@ -189,7 +189,7 @@
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(roundrect_rratio 0.15)
-		(uuid "b82a3cff-1d29-4bf4-b71e-dff84d8cdb7a")
+		(uuid "f9fd97a8-3470-4d16-a5b0-125485ba74c0")
 	)
 	(pad "2" thru_hole roundrect
 		(at -43.18 -7.62 270)
@@ -198,7 +198,7 @@
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(roundrect_rratio 0.15)
-		(uuid "1cfabd5b-21e0-455f-b5f8-e68f205be5a3")
+		(uuid "e816814e-47ec-4307-8631-cfd862179dc3")
 	)
 	(pad "3" thru_hole roundrect
 		(at -43.18 -5.08 270)
@@ -207,7 +207,7 @@
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(roundrect_rratio 0.15)
-		(uuid "5eb3b8fa-a6fd-45ae-81f1-0f8573693481")
+		(uuid "c411dbd7-ba63-4664-9318-53d142f08383")
 	)
 	(pad "4" thru_hole roundrect
 		(at -43.18 -2.54 270)
@@ -216,7 +216,7 @@
 		(layers "*.Cu" "*.Mask")
 		(remove_unused_layers no)
 		(roundrect_rratio 0.15)
-		(uuid "70123b65-acb9-4b1e-8a30-1aee698ac52d")
+		(uuid "2bcc0568-6945-4b14-9298-243d15dc6da2")
 	)
 	(embedded_fonts no)
 )
