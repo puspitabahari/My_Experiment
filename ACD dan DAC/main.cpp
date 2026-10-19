@@ -1,24 +1,41 @@
+
 #include <Arduino.h>
-const int potPin = A0; // Pin analog untuk membaca potensiometer
+
+// Pin configuration
+constexpr uint8_t POTENTIOMETER_PIN = A0;
+
+// ADC configuration
+constexpr uint16_t ADC_MAX_VALUE = 1023;
+constexpr float ADC_REFERENCE_VOLTAGE = 5.0F;
+
+// Serial communication configuration
+constexpr unsigned long SERIAL_BAUD_RATE = 9600;
+
+// Sampling configuration
+constexpr unsigned long SAMPLING_INTERVAL_MS = 200;
+
+// Output configuration
+constexpr uint8_t VOLTAGE_DECIMAL_PLACES = 2;
 
 void setup() {
-  // Inisialisasi komunikasi Serial dengan kecepatan 9600 bps
-  Serial.begin(9600); 
+    Serial.begin(SERIAL_BAUD_RATE);
 }
 
 void loop() {
-  // Read nilai mentah ADC (0 - 1023)
-  int adcValue = analogRead(potPin);
-  
-  // Konversi nilai ADC ke satuan Volt
-  float voltage = (adcValue / 1023.0) * 5.0;
+    // Read raw ADC value
+    const int adcValue = analogRead(POTENTIOMETER_PIN);
 
-  // Tampilkan hasil di Serial Monitor
-  Serial.print("Nilai ADC: ");
-  Serial.print(adcValue);
-  Serial.print(" \t| Tegangan: ");
-  Serial.print(voltage, 2); // 2 angka di belakang koma
-  Serial.println(" V");
+    // Convert ADC value to voltage
+    const float voltage =
+        (static_cast<float>(adcValue) / ADC_MAX_VALUE)
+        * ADC_REFERENCE_VOLTAGE;
 
-  delay(200); // Jeda pembacaan
+    // Display measurement results
+    Serial.print("ADC Value: ");
+    Serial.print(adcValue);
+    Serial.print("\t| Voltage: ");
+    Serial.print(voltage, VOLTAGE_DECIMAL_PLACES);
+    Serial.println(" V");
+
+    delay(SAMPLING_INTERVAL_MS);
 }
