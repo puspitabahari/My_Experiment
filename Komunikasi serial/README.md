@@ -114,6 +114,6 @@ Keterangan:
 
 Source code percobaan tersedia pada repository GitHub berikut:
 
-[My_Experiment - Komunikasi Serial](https://github.com/puspitabahari/My_Experiment/tree/main/Komunikasi%20serial)
+[My_Experiment - Transmitter](https://github.com/puspitabahari/My_Experiment/blob/main/Komunikasi%20serial/Transmitter_data.cpp)
 
 [Receiver_data.cpp - Komunikasi Serial](https://github.com/puspitabahari/My_Experiment/blob/main/Komunikasi%20serial/Receiver_data.cpp) 
