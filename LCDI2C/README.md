@@ -30,4 +30,4 @@ Alamat I2C LCD diperiksa menggunakan program I2C Scanner.
 - `Arduino.h`
 
 ## Repository
-[GitHub - My_Experiment/LCDI2C](https://github.com/puspitabahari/My_Experiment/tree/main/LCDI2C)
+[GitHub - My_Experiment/LCDI2C](https://github.com/puspitabahari/My_Experiment/blob/main/LCDI2C/LCDI2C.cpp)
