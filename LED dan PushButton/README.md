@@ -34,4 +34,4 @@ Push button menggunakan konfigurasi `INPUT_PULLUP`, sehingga kondisi tombol bern
 - Pengukuran dilakukan untuk mengamati tegangan digital pada kondisi ON dan OFF.
 
 ## Repository
-[GitHub - LED dan Push Button](https://github.com/puspitabahari/My_Experiment/tree/main/LED%20dan%20PushButton)
+[GitHub - LED dan Push Button](https://github.com/puspitabahari/My_Experiment/blob/main/LED%20dan%20PushButton/LED%20and%20PushButton.cpp)
