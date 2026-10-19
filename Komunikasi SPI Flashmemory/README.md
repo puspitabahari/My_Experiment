@@ -70,4 +70,4 @@ Karakteristik dasar teknologi NOR Flash pada W25Qxx adalah aturan **Erase-Before
 ---
 
 ## Kode Program
-*catatan*: kode nya terdapat di file main.cpp
+[komunikasi_SPI_Flashmemory - main.cpp](https://github.com/puspitabahari/My_Experiment/blob/main/Komunikasi%20SPI%20Flashmemory/main.cpp)
