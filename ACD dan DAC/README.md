@@ -31,4 +31,4 @@ Eksperimen ini bertujuan untuk mempelajari konsep dasar konversi sinyal analog k
 platform = atmelavr
 board = uno
 framework = arduino
-monitor_speed = 115200
+monitor_speed = 9600
