@@ -1,58 +1,109 @@
-// Deklarasi Pin
-const int buttonPin = 2;
-const int ledPin = 8;
 
-// Variabel untuk menyimpan status
-int ledState = LOW;
-int buttonState;
-int lastButtonState = HIGH;  // HIGH karena kita pakai INPUT_PULLUP
+#include <Arduino.h>
 
-// Variabel untuk Non-Blocking Debounce & Counter
-unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 50;    // Jeda waktu debounce 50 milidetik
-int pressCount = 0;                  // Counter jumlah tekanan tombol
+// ==================== Konfigurasi ====================
 
-void setup() {
-  pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(ledPin, OUTPUT);
+namespace Config {
+  constexpr uint8_t BUTTON_PIN = 2;
+  constexpr uint8_t LED_PIN = 8;
 
-  // Memulai komunikasi Serial Port untuk melihat counter
-  Serial.begin(9600);
-  Serial.println("Sistem Siap. Silakan tekan tombol!");
+  constexpr uint32_t SERIAL_BAUD_RATE = 9600;
+  constexpr uint32_t DEBOUNCE_INTERVAL_MS = 50;
+
+  constexpr uint8_t BUTTON_PRESSED = LOW;
+  constexpr uint8_t LED_ON = HIGH;
+  constexpr uint8_t LED_OFF = LOW;
+
+  constexpr char MESSAGE_SYSTEM_READY[] =
+      "Sistem siap. Silakan tekan tombol!";
+  constexpr char MESSAGE_BUTTON_PRESSED[] =
+      "Tombol ditekan! Total: ";
+  constexpr char MESSAGE_LED_ON[] = "MENYALA";
+  constexpr char MESSAGE_LED_OFF[] = "MATI";
 }
 
-void loop() {
-  // Membaca status tombol saat ini
-  int reading = digitalRead(buttonPin);
+// ==================== Variabel Global ====================
 
-  // Jika status tombol berubah (karena ditekan atau noise/bouncing)
-  if (reading != lastButtonState) {
-    lastDebounceTime = millis(); // Reset timer debounce
+bool ledState = false;
+
+uint8_t buttonState = HIGH;
+uint8_t lastButtonReading = HIGH;
+
+uint32_t lastDebounceTime = 0;
+uint32_t pressCount = 0;
+
+// ==================== Deklarasi Fungsi ====================
+
+void initializeSystem();
+void updateButton();
+void handleButtonPress();
+void printStatus();
+
+// ==================== Setup ====================
+
+void setup() {
+  initializeSystem();
+}
+
+// ==================== Loop ====================
+
+void loop() {
+  updateButton();
+}
+
+// ==================== Implementasi Fungsi ====================
+
+void initializeSystem() {
+  pinMode(Config::BUTTON_PIN, INPUT_PULLUP);
+  pinMode(Config::LED_PIN, OUTPUT);
+
+  digitalWrite(Config::LED_PIN, Config::LED_OFF);
+
+  Serial.begin(Config::SERIAL_BAUD_RATE);
+  Serial.println(Config::MESSAGE_SYSTEM_READY);
+}
+
+void updateButton() {
+  const uint32_t currentTime = millis();
+  const uint8_t currentReading = digitalRead(Config::BUTTON_PIN);
+
+  if (currentReading != lastButtonReading) {
+    lastDebounceTime = currentTime;
   }
 
-  // Jika bacaan sudah stabil melebihi waktu debounceDelay
-  if ((millis() - lastDebounceTime) > debounceDelay) {
+  if (currentTime - lastDebounceTime >=
+      Config::DEBOUNCE_INTERVAL_MS) {
+    if (currentReading != buttonState) {
+      buttonState = currentReading;
 
-    // Jika status tombol benar-benar berubah dari state sebelumnya
-    if (reading != buttonState) {
-      buttonState = reading;
-
-      // INPUT_PULLUP berarti saat tombol ditekan, statusnya LOW
-      if (buttonState == LOW) {
-        ledState = !ledState; // Balikkan status LED (Toggle)
-        digitalWrite(ledPin, ledState); // Nyalakan/matikan LED
-
-        pressCount++; // Tambah nilai counter
-
-        // Tampilkan informasi di Serial Monitor
-        Serial.print("Tombol ditekan! Total: ");
-        Serial.print(pressCount);
-        Serial.print(" | Status LED: ");
-        Serial.println(ledState == HIGH ? "MENYALA (Silakan ukur tegangan!)" : "MATI");
+      if (buttonState == Config::BUTTON_PRESSED) {
+        handleButtonPress();
       }
     }
   }
 
-  // Simpan status bacaan untuk iterasi loop berikutnya
-  lastButtonState = reading;
+  lastButtonReading = currentReading;
+}
+
+void handleButtonPress() {
+  ledState = !ledState;
+
+  digitalWrite(
+    Config::LED_PIN,
+    ledState ? Config::LED_ON : Config::LED_OFF
+  );
+
+  ++pressCount;
+
+  printStatus();
+}
+
+void printStatus() {
+  Serial.print(Config::MESSAGE_BUTTON_PRESSED);
+  Serial.print(pressCount);
+  Serial.print(" | Status LED: ");
+
+  Serial.println(
+    ledState ? Config::MESSAGE_LED_ON : Config::MESSAGE_LED_OFF
+  );
 }
