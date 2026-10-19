@@ -4,7 +4,7 @@ Proyek ini mendemonstrasikan implementasi sistem **Data Logger** berbasis mikrok
 
 ---
 
-## 📑 Daftar Isi
+## Daftar Isi
 - [Teori & Arsitektur Memori](#teori--arsitektur-memori)
 - [Aturan Erase-Before-Write](#aturan-erase-before-write)
 - [Skema Pinout & Rangkaian](#skema-pinout--rangkaian)
@@ -15,7 +15,7 @@ Proyek ini mendemonstrasikan implementasi sistem **Data Logger** berbasis mikrok
 
 ---
 
-## 🧠 Teori & Arsitektur Memori
+## Teori & Arsitektur Memori
 
 ### 1. Karakteristik W25Qxx NOR Flash
 Modul **Winbond W25Qxx** adalah sirkuit terintegrasi memori *non-volatile* berjenis NOR Flash yang dirancang untuk penyimpanan data berkapasitas besar dan berkecepatan tinggi.
@@ -33,7 +33,7 @@ Modul **Winbond W25Qxx** adalah sirkuit terintegrasi memori *non-volatile* berje
 
 ---
 
-## 🔄 Aturan Erase-Before-Write
+## Aturan Erase-Before-Write
 
 Karakteristik dasar teknologi NOR Flash pada W25Qxx adalah aturan **Erase-Before-Write** (penghapusan sebelum penulisan):
 * Dalam kondisi terhapus (*erased state*), seluruh bit berada pada logika `1` (nilai byte default `0xFF` / `11111111`).
@@ -45,7 +45,7 @@ Karakteristik dasar teknologi NOR Flash pada W25Qxx adalah aturan **Erase-Before
 
 ## 🔌 Skema Pinout & Rangkaian
 
-> ⚠️ **PERHATIAN TEGANGAN:** Tegangan kerja modul W25Qxx adalah **3.3V**. Hubungkan VCC ke pin **3.3V Arduino**. **Jangan ke 5V** agar IC memori tidak rusak!
+> **PERHATIAN TEGANGAN:** Tegangan kerja modul W25Qxx adalah **3.3V**. Hubungkan VCC ke pin **3.3V Arduino**. **Jangan ke 5V** agar IC memori tidak rusak!
 
 | Pin Modul W25Qxx | Pin Arduino Uno | Keterangan |
 | :--- | :--- | :--- |
@@ -61,7 +61,7 @@ Karakteristik dasar teknologi NOR Flash pada W25Qxx adalah aturan **Erase-Before
 
 ---
 
-## 🛠️ Prasyarat & Dependensi
+## Prasyarat & Dependensi
 
 * **IDE:** PlatformIO IDE / Arduino IDE
 * **Pustaka (Library):** `SPIMemory` oleh Marzogh
@@ -69,5 +69,5 @@ Karakteristik dasar teknologi NOR Flash pada W25Qxx adalah aturan **Erase-Before
 
 ---
 
-## 💻 Kode Program
+## Kode Program
 *catatan*: kode nya terdapat di file main.cpp
