@@ -1,80 +1,137 @@
+
 #include <Arduino.h>
 #include <SPIMemory.h>
 
-SPIFlash flash(10); // Pin CS ke pin 10
+// ==================== HARDWARE CONFIGURATION ====================
+constexpr uint8_t FLASH_CS_PIN = 10;
+constexpr uint8_t POTENTIOMETER_PIN = A0;
 
-// 1. Definisikan Struktur Data (Paket data logger)
+// ==================== SERIAL CONFIGURATION ====================
+constexpr unsigned long SERIAL_BAUD_RATE = 115200;
+constexpr unsigned long SERIAL_INITIALIZATION_DELAY_MS = 2000;
+
+// ==================== ADC CONFIGURATION ====================
+constexpr uint16_t ADC_MAX_VALUE = 1023;
+constexpr float ADC_REFERENCE_VOLTAGE = 5.0F;
+constexpr uint8_t VOLTAGE_DECIMAL_PLACES = 2;
+
+// ==================== DATA LOGGING CONFIGURATION ====================
+constexpr uint32_t FLASH_START_ADDRESS = 0x00;
+constexpr uint16_t TOTAL_SAMPLES = 5;
+constexpr unsigned long SAMPLING_INTERVAL_MS = 1000;
+
+// ==================== FLASH MEMORY OBJECT ====================
+SPIFlash flash(FLASH_CS_PIN);
+
+// ==================== DATA STRUCTURE ====================
 struct DataLog {
-  uint32_t timestamp; // Waktu dalam milidetik (millis)
-  int adcValue;       // Nilai mentah ADC (0 - 1023)
-  float voltage;      // Hasil konversi ke tegangan (Volt)
+    uint32_t timestamp;
+    int adcValue;
+    float voltage;
 };
 
-const uint32_t START_ADDRESS = 0x00; // Alamat awal penyimpanan
-const int TOTAL_SAMPLES = 5;          // Jumlah sampel yang ingin dicatat
-
 void setup() {
-  Serial.begin(115200);
-  delay(2000);
+    Serial.begin(SERIAL_BAUD_RATE);
+    delay(SERIAL_INITIALIZATION_DELAY_MS);
 
-  if (!flash.begin()) {
-    Serial.println("Gagal mendeteksi Flash Memory!");
-    while (1);
-  }
+    // Initialize Flash Memory
+    if (!flash.begin()) {
+        Serial.println("ERROR: Flash Memory initialization failed!");
 
-  Serial.println("=== MULAI DATA LOGGING ===");
-  
-  // 2. Erase Sektor sebelum menulis data baru
-  Serial.println("Menghapus sektor memori...");
-  flash.eraseSector(START_ADDRESS);
-
-  uint32_t currentAddress = START_ADDRESS;
-
-  // 3. PROSES PENULISAN (LOGGING)
-  for (int i = 1; i <= TOTAL_SAMPLES; i++) {
-    DataLog dataInput;
-    
-    // Ambil data sensor
-    dataInput.timestamp = millis();
-    dataInput.adcValue = analogRead(A0); 
-    dataInput.voltage = (dataInput.adcValue / 1023.0) * 5.0;
-
-    // Simpan struct ke dalam memori
-    if (flash.writeAnything(currentAddress, dataInput)) {
-      Serial.print("[WRITE] Sampel #"); Serial.print(i);
-      Serial.print(" tersimpan di Alamat: 0x"); Serial.println(currentAddress, HEX);
-    } else {
-      Serial.println("[ERROR] Gagal menyimpan data.");
+        while (true) {
+            // Stop execution if Flash Memory is unavailable
+        }
     }
 
-    // Geser alamat memori sejauh ukuran struct (dalam bytes)
-    currentAddress += sizeof(DataLog);
+    Serial.println("=== DATA LOGGING STARTED ===");
 
-    delay(1000); // Jeda 1 detik antar pencatatan
-  }
+    // Erase the sector before writing new data
+    Serial.println("Erasing Flash Memory sector...");
 
-  Serial.println("\n=== BACA KEMBALI DATA DARI MEMORI ===");
-  
-  // 4. PROSES PEMBACAAN (READING)
-  currentAddress = START_ADDRESS; // Reset alamat ke posisi awal
-
-  for (int i = 1; i <= TOTAL_SAMPLES; i++) {
-    DataLog dataOutput;
-
-    // Baca struct dari memori
-    if (flash.readAnything(currentAddress, dataOutput)) {
-      Serial.print("Data #"); Serial.print(i);
-      Serial.print(" | Time: "); Serial.print(dataOutput.timestamp);
-      Serial.print(" ms | ADC: "); Serial.print(dataOutput.adcValue);
-      Serial.print(" | Tegangan: "); Serial.print(dataOutput.voltage, 2);
-      Serial.println(" V");
+    if (!flash.eraseSector(FLASH_START_ADDRESS)) {
+        Serial.println("ERROR: Failed to erase Flash Memory sector!");
+        return;
     }
 
-    // Geser alamat memori sejauh ukuran struct
-    currentAddress += sizeof(DataLog);
-  }
+    uint32_t currentAddress = FLASH_START_ADDRESS;
+
+    // ==================== DATA WRITING ====================
+    for (uint16_t sampleIndex = 1;
+         sampleIndex <= TOTAL_SAMPLES;
+         ++sampleIndex) {
+
+        DataLog dataInput{};
+
+        // Acquire analog sensor data
+        dataInput.timestamp = millis();
+        dataInput.adcValue = analogRead(POTENTIOMETER_PIN);
+
+        dataInput.voltage =
+            (static_cast<float>(dataInput.adcValue) / ADC_MAX_VALUE)
+            * ADC_REFERENCE_VOLTAGE;
+
+        // Write data to Flash Memory
+        if (flash.writeAnything(currentAddress, dataInput)) {
+            Serial.print("[WRITE] Sample #");
+            Serial.print(sampleIndex);
+            Serial.print(" stored at address: 0x");
+            Serial.println(currentAddress, HEX);
+        } else {
+            Serial.println("[ERROR] Failed to write data.");
+        }
+
+        // Advance to the next record
+        currentAddress += sizeof(DataLog);
+
+        if (sampleIndex < TOTAL_SAMPLES) {
+            delay(SAMPLING_INTERVAL_MS);
+        }
+    }
+
+    Serial.println();
+    Serial.println("=== READING DATA FROM FLASH MEMORY ===");
+
+    // ==================== DATA READING ====================
+    currentAddress = FLASH_START_ADDRESS;
+
+    for (uint16_t sampleIndex = 1;
+         sampleIndex <= TOTAL_SAMPLES;
+         ++sampleIndex) {
+
+        DataLog dataOutput{};
+
+        // Read data from Flash Memory
+        if (flash.readAnything(currentAddress, dataOutput)) {
+            Serial.print("Sample #");
+            Serial.print(sampleIndex);
+
+            Serial.print(" | Timestamp: ");
+            Serial.print(dataOutput.timestamp);
+            Serial.print(" ms");
+
+            Serial.print(" | ADC: ");
+            Serial.print(dataOutput.adcValue);
+
+            Serial.print(" | Voltage: ");
+            Serial.print(
+                dataOutput.voltage,
+                VOLTAGE_DECIMAL_PLACES
+            );
+
+            Serial.println(" V");
+        } else {
+            Serial.print("[ERROR] Failed to read sample #");
+            Serial.println(sampleIndex);
+        }
+
+        // Advance to the next record
+        currentAddress += sizeof(DataLog);
+    }
+
+    Serial.println();
+    Serial.println("=== DATA LOGGING COMPLETED ===");
 }
 
 void loop() {
-  // Kosong
+    // No continuous processing is required.
 }

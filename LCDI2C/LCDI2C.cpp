@@ -1,87 +1,154 @@
+
 #include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-// Inisialisasi LCD 16x2 dengan alamat I2C 0x27
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+// ==================== Konfigurasi ====================
 
-// Deklarasi Pin
-const int buttonPin = 2;
-const int ledPin = 8;
+namespace Config {
+  constexpr uint8_t LCD_I2C_ADDRESS = 0x27;
+  constexpr uint8_t LCD_COLUMNS = 16;
+  constexpr uint8_t LCD_ROWS = 2;
 
-// Variabel untuk menyimpan status
-int ledState = LOW;
-int buttonState;
-int lastButtonState = HIGH;  // HIGH karena memakai INPUT_PULLUP
+  constexpr uint8_t BUTTON_PIN = 2;
+  constexpr uint8_t LED_PIN = 8;
 
-// Variabel untuk Non-Blocking Debounce & Counter
-unsigned long lastDebounceTime = 0;
-unsigned long debounceDelay = 50;    // Jeda waktu debounce 50 ms
-int pressCount = 0;                  // Counter jumlah tekanan tombol
+  constexpr uint32_t SERIAL_BAUD_RATE = 9600;
+  constexpr uint32_t DEBOUNCE_INTERVAL_MS = 50;
 
-void setup() {
-  pinMode(buttonPin, INPUT_PULLUP);
-  pinMode(ledPin, OUTPUT);
+  constexpr uint8_t LCD_STATUS_ROW = 0;
+  constexpr uint8_t LCD_COUNTER_ROW = 1;
+  constexpr uint8_t LCD_START_COLUMN = 0;
 
-  // Inisialisasi LCD
-  lcd.init();
-  lcd.backlight();
-  
-  // Tampilan awal di LCD
-  lcd.setCursor(0, 0);
-  lcd.print("TURN OFF THE LAMP");
+  constexpr uint8_t BUTTON_PRESSED = LOW;
+  constexpr uint8_t LED_ON = HIGH;
+  constexpr uint8_t LED_OFF = LOW;
 
-  // Memulai komunikasi Serial Port
-  Serial.begin(9600);
-  Serial.println("Sistem Siap. Silakan tekan tombol!");
+  constexpr char MESSAGE_LED_ON[] = "TURN ON THE LAMP";
+  constexpr char MESSAGE_LED_OFF[] = "TURN OFF THE LAMP";
+  constexpr char MESSAGE_COUNTER[] = "Press Count: ";
 }
 
-void loop() {
-  // Membaca status tombol saat ini
-  int reading = digitalRead(buttonPin);
+// ==================== Objek LCD ====================
 
-  // Jika status tombol berubah (karena ditekan atau noise/bouncing)
-  if (reading != lastButtonState) {
-    lastDebounceTime = millis(); // Reset timer debounce
+LiquidCrystal_I2C lcd(
+  Config::LCD_I2C_ADDRESS,
+  Config::LCD_COLUMNS,
+  Config::LCD_ROWS
+);
+
+// ==================== Variabel Global ====================
+
+bool ledState = false;
+uint8_t buttonState = HIGH;
+uint8_t lastButtonReading = HIGH;
+
+uint32_t lastDebounceTime = 0;
+uint32_t pressCount = 0;
+
+// ==================== Deklarasi Fungsi ====================
+
+void initializeSystem();
+void updateButton();
+void handleButtonPress();
+void updateLcd();
+void printStatus();
+
+// ==================== Setup ====================
+
+void setup() {
+  initializeSystem();
+}
+
+// ==================== Loop ====================
+
+void loop() {
+  updateButton();
+}
+
+// ==================== Implementasi Fungsi ====================
+
+void initializeSystem() {
+  pinMode(Config::BUTTON_PIN, INPUT_PULLUP);
+  pinMode(Config::LED_PIN, OUTPUT);
+
+  digitalWrite(Config::LED_PIN, Config::LED_OFF);
+
+  Serial.begin(Config::SERIAL_BAUD_RATE);
+
+  Wire.begin();
+
+  lcd.init();
+  lcd.backlight();
+  lcd.clear();
+
+  updateLcd();
+
+  Serial.println("Sistem siap. Silakan tekan tombol!");
+}
+
+void updateButton() {
+  const uint32_t currentTime = millis();
+  const uint8_t currentReading = digitalRead(Config::BUTTON_PIN);
+
+  if (currentReading != lastButtonReading) {
+    lastDebounceTime = currentTime;
   }
 
-  // Jika bacaan sudah stabil melebihi waktu debounceDelay
-  if ((millis() - lastDebounceTime) > debounceDelay) {
+  if (currentTime - lastDebounceTime >= Config::DEBOUNCE_INTERVAL_MS) {
+    if (currentReading != buttonState) {
+      buttonState = currentReading;
 
-    // Jika status tombol benar-benar berubah dari state sebelumnya
-    if (reading != buttonState) {
-      buttonState = reading;
-
-      // INPUT_PULLUP berarti saat tombol ditekan, statusnya LOW
-      if (buttonState == LOW) {
-        ledState = !ledState; // Balikkan status LED (Toggle)
-        digitalWrite(ledPin, ledState); // Nyalakan/matikan LED
-
-        pressCount++; // Tambah nilai counter
-
-        // Update tampilan LCD
-        lcd.clear();
-        lcd.setCursor(0, 0);
-        if (ledState == HIGH) {
-          lcd.print("TURN ON THE LAMP");
-        } else {
-          lcd.print("TURN OFF THE LAMP");
-        }
-
-        // Menampilkan counter pada baris kedua LCD
-        lcd.setCursor(0, 1);
-        lcd.print("Press Count: ");
-        lcd.print(pressCount);
-
-        // Tampilkan informasi di Serial Monitor
-        Serial.print("Tombol ditekan! Total: ");
-        Serial.print(pressCount);
-        Serial.print(" | Status LED: ");
-        Serial.println(ledState == HIGH ? "MENYALA (Silakan ukur tegangan!)" : "MATI");
+      if (buttonState == Config::BUTTON_PRESSED) {
+        handleButtonPress();
       }
     }
   }
 
-  // Simpan status bacaan untuk iterasi loop berikutnya
-  lastButtonState = reading;
+  lastButtonReading = currentReading;
+}
+
+void handleButtonPress() {
+  ledState = !ledState;
+
+  digitalWrite(
+    Config::LED_PIN,
+    ledState ? Config::LED_ON : Config::LED_OFF
+  );
+
+  ++pressCount;
+
+  updateLcd();
+  printStatus();
+}
+
+void updateLcd() {
+  lcd.clear();
+
+  lcd.setCursor(
+    Config::LCD_START_COLUMN,
+    Config::LCD_STATUS_ROW
+  );
+
+  lcd.print(
+    ledState
+      ? Config::MESSAGE_LED_ON
+      : Config::MESSAGE_LED_OFF
+  );
+
+  lcd.setCursor(
+    Config::LCD_START_COLUMN,
+    Config::LCD_COUNTER_ROW
+  );
+
+  lcd.print(Config::MESSAGE_COUNTER);
+  lcd.print(pressCount);
+}
+
+void printStatus() {
+  Serial.print("Tombol ditekan! Total: ");
+  Serial.print(pressCount);
+
+  Serial.print(" | Status LED: ");
+  Serial.println(ledState ? "MENYALA" : "MATI");
 }
