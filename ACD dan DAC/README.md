@@ -1,4 +1,4 @@
-# Eksperimen Akuisisi Sinyal ADC & DAC - PlatformIO
+# Eksperimen Sinyal ADC & DAC - PlatformIO
 
 Dokumentasi dan kode program untuk eksperimen pembacaan sinyal analog (**ADC**) serta konversi sinyal (**DAC**) menggunakan mikrokontroler Arduino Uno pada lingkungan pengembangan **PlatformIO IDE**.
 
