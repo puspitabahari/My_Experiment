@@ -25,7 +25,7 @@ Eksperimen ini bertujuan untuk mempelajari konsep dasar konversi sinyal analog k
 ---
 
 ## 💻 Konfigurasi `platformio.ini`
-
+*catatan*: kode program tertera di main.cpp
 ```ini
 [env:uno]
 platform = atmelavr
